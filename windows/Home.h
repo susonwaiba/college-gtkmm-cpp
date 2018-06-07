@@ -21,6 +21,8 @@ protected:
     int current_chat_user_id;
     std::string current_chat_user_name;
 
+    int last_message_id;
+
     Gtk::Window *window = nullptr;
     Gtk::ScrolledWindow *home_message_box = nullptr;
     Gtk::Box *home_friends_box_row = nullptr;
@@ -51,6 +53,14 @@ protected:
     Gtk::Entry *home_message_input = nullptr;
     Gtk::Button *home_message_send_button = nullptr;
     std::string message;
+
+    Glib::Dispatcher dispatcher;
+    Glib::Thread* message_sync_thread;
+
+    int friend_sync_timer;
+
+    int current_friend_color_count;
+    std::string current_friend_colors[2] = {"green", "orange"};
 public:
     Home(std::string token_in, int current_user_id_in, std::string current_user_name_in);
 
@@ -72,9 +82,11 @@ public:
 
     void on_message_change();
 
-    void sync_message_thread();
+    void on_friend_message_clicked(int position);
 
-    void sync_friend_thread();
+    void sync_worker_thread();
+
+    void on_notification_from_worker_thread();
 
     void show_window();
 };
