@@ -6,32 +6,32 @@
 #include <cpr/cpr.h>
 #include <json.hpp>
 #include "../include/Config.h"
-#include "Register.h"
+#include "RegisterWindow.h"
 
-Register::Register() {
+RegisterWindow::RegisterWindow() {
     name = "";
     email = "";
     password = "";
     passwordConfirmation = "";
 }
 
-void Register::on_name_change() {
+void RegisterWindow::on_name_change() {
     name = nameInput->get_text();
 }
 
-void Register::on_email_change() {
+void RegisterWindow::on_email_change() {
     email = emailInput->get_text();
 }
 
-void Register::on_password_change() {
+void RegisterWindow::on_password_change() {
     password = passwordInput->get_text();
 }
 
-void Register::on_password_confirmation_change() {
+void RegisterWindow::on_password_confirmation_change() {
     passwordConfirmation = passwordConfirmationInput->get_text();
 }
 
-void Register::on_register_clicked() {
+void RegisterWindow::on_register_clicked() {
     Config config;
     auto response = cpr::Post(cpr::Url{config.api_url + "register"}, cpr::Payload{
             {"name",                  name},
@@ -60,7 +60,7 @@ void Register::on_register_clicked() {
     }
 }
 
-void Register::show_window() {
+void RegisterWindow::show_window() {
     builderRef->get_widget("register_window", window);
     builderRef->get_widget("register_alert_message", alertMessage);
     if (window) {
@@ -68,33 +68,33 @@ void Register::show_window() {
         /*Name Input*/
         builderRef->get_widget("register_name_input", nameInput);
         if (nameInput) {
-            nameInput->signal_changed().connect(sigc::mem_fun(*this, &Register::on_name_change));
+            nameInput->signal_changed().connect(sigc::mem_fun(*this, &RegisterWindow::on_name_change));
         }
         std::cout << nameInput << std::endl;
 
         /*Email Input*/
         builderRef->get_widget("register_email_input", emailInput);
         if (emailInput) {
-            emailInput->signal_changed().connect(sigc::mem_fun(*this, &Register::on_email_change));
+            emailInput->signal_changed().connect(sigc::mem_fun(*this, &RegisterWindow::on_email_change));
         }
 
         /*Password Input*/
         builderRef->get_widget("register_password_input", passwordInput);
         if (passwordInput) {
-            passwordInput->signal_changed().connect(sigc::mem_fun(*this, &Register::on_password_change));
+            passwordInput->signal_changed().connect(sigc::mem_fun(*this, &RegisterWindow::on_password_change));
         }
 
         /*Password Confirmation Input*/
         builderRef->get_widget("register_password_confirmation_input", passwordConfirmationInput);
         if (passwordConfirmationInput) {
             passwordConfirmationInput->signal_changed().connect(
-                    sigc::mem_fun(*this, &Register::on_password_confirmation_change));
+                    sigc::mem_fun(*this, &RegisterWindow::on_password_confirmation_change));
         }
 
-        /*Register Button*/
+        /*RegisterWindow Button*/
         builderRef->get_widget("register_register_button", registerButton);
         if (registerButton) {
-            registerButton->signal_clicked().connect(sigc::mem_fun(*this, &Register::on_register_clicked));
+            registerButton->signal_clicked().connect(sigc::mem_fun(*this, &RegisterWindow::on_register_clicked));
         }
 
         window->show_all_children();

@@ -6,22 +6,22 @@
 #include <json.hpp>
 #include <fstream>
 #include "../include/Config.h"
-#include "Login.h"
+#include "LoginWindow.h"
 
-Login::Login() {
+LoginWindow::LoginWindow() {
     email = "";
     password = "";
 };
 
-void Login::on_email_change() {
+void LoginWindow::on_email_change() {
     email = emailInput->get_text();
 }
 
-void Login::on_password_change() {
+void LoginWindow::on_password_change() {
     password = passwordInput->get_text();
 }
 
-void Login::on_login_clicked() {
+void LoginWindow::on_login_clicked() {
     Config config;
     std::ofstream authFile;
     auto response = cpr::Post(cpr::Url{config.base_url + "oauth/token"}, cpr::Payload{
@@ -36,7 +36,7 @@ void Login::on_login_clicked() {
     switch (response.status_code) {
         case 200: {
             alertMessage->override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
-            alertMessage->set_text("Login successful!");
+            alertMessage->set_text("LoginWindow successful!");
             authFile.open(config.auth_file);
             authFile << std::setw(4) << json << std::endl;
             authFile.close();
@@ -58,34 +58,34 @@ void Login::on_login_clicked() {
     }
 }
 
-void Login::on_register_clicked() {
+void LoginWindow::on_register_clicked() {
     registerRef.init(appRef, builderRef);
     registerRef.show_window();
 }
 
-void Login::show_window() {
+void LoginWindow::show_window() {
     builderRef->get_widget("login_window", window);
     builderRef->get_widget("login_alert_message", alertMessage);
     if (window) {
 
         builderRef->get_widget("login_email_input", emailInput);
         if (emailInput) {
-            emailInput->signal_changed().connect(sigc::mem_fun(*this, &Login::on_email_change));
+            emailInput->signal_changed().connect(sigc::mem_fun(*this, &LoginWindow::on_email_change));
         }
 
         builderRef->get_widget("login_password_input", passwordInput);
         if (passwordInput) {
-            passwordInput->signal_changed().connect(sigc::mem_fun(*this, &Login::on_password_change));
+            passwordInput->signal_changed().connect(sigc::mem_fun(*this, &LoginWindow::on_password_change));
         }
 
         builderRef->get_widget("login_login_button", loginButton);
         if (loginButton) {
-            loginButton->signal_clicked().connect(sigc::mem_fun(*this, &Login::on_login_clicked));
+            loginButton->signal_clicked().connect(sigc::mem_fun(*this, &LoginWindow::on_login_clicked));
         }
 
         builderRef->get_widget("login_register_button", registerButton);
         if (registerButton) {
-            registerButton->signal_clicked().connect(sigc::mem_fun(*this, &Login::on_register_clicked));
+            registerButton->signal_clicked().connect(sigc::mem_fun(*this, &LoginWindow::on_register_clicked));
         }
 
         window->show_all_children();

@@ -6,10 +6,10 @@
 #define CHAT_LOGIN_H
 
 #include <gtkmm.h>
-#include "Main.h"
-#include "Register.h"
+#include "MainWindow.h"
+#include "RegisterWindow.h"
 
-class Login : public Main {
+class LoginWindow : public MainWindow {
 private:
     Gtk::Window *window = nullptr;
     Gtk::Label *alertMessage = nullptr;
@@ -19,9 +19,9 @@ private:
     Gtk::Button *registerButton = nullptr;
     std::string email;
     std::string password;
-    Register registerRef;
+    RegisterWindow registerRef;
 public:
-    Login();
+    LoginWindow();
 
     void on_email_change();
 

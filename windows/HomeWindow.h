@@ -6,14 +6,14 @@
 #define CHAT_HOME_H
 
 #include <gtkmm.h>
-#include "Main.h"
-#include "About.h"
-#include "AddFriend.h"
+#include "MainWindow.h"
+#include "AboutWindow.h"
+#include "AddFriendWindow.h"
 
 #define messageCount 30
 #define friendCount 30
 
-class Home : public Main {
+class HomeWindow : public MainWindow {
 protected:
     std::string token;
     int current_user_id;
@@ -31,9 +31,9 @@ protected:
     /*For Menu Option*/
     Gtk::Label *home_user_name = nullptr;
     Gtk::Button *logoutButton = nullptr;
-    About aboutRef;
+    AboutWindow aboutRef;
     Gtk::Button *aboutButton = nullptr;
-    AddFriend addFriendRef;
+    AddFriendWindow addFriendRef;
 
     Gtk::Button *home_add_friend = nullptr;
 
@@ -62,7 +62,7 @@ protected:
     int current_friend_color_count;
     std::string current_friend_colors[2] = {"green", "orange"};
 public:
-    Home(std::string token_in, int current_user_id_in, std::string current_user_name_in);
+    HomeWindow(std::string token_in, int current_user_id_in, std::string current_user_name_in);
 
     void circulate_friend(std::string name, int user_id);
 
@@ -87,6 +87,8 @@ public:
     void sync_worker_thread();
 
     void on_notification_from_worker_thread();
+
+    void sayHi(std::string name, int id);
 
     void show_window();
 };

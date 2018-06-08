@@ -8,10 +8,10 @@
 #include <fstream>
 #include <cpr/cpr.h>
 #include <json.hpp>
-#include "Home.h"
+#include "HomeWindow.h"
 #include "../include/Config.h"
 
-Home::Home(std::string token_in, int current_user_id_in, std::string current_user_name_in) {
+HomeWindow::HomeWindow(std::string token_in, int current_user_id_in, std::string current_user_name_in) {
     token = token_in;
     current_user_id = current_user_id_in;
     current_user_name = current_user_name_in;
@@ -22,7 +22,7 @@ Home::Home(std::string token_in, int current_user_id_in, std::string current_use
     current_friend_color_count = 0;
 }
 
-void Home::circulate_friend(std::string name, int user_id) {
+void HomeWindow::circulate_friend(std::string name, int user_id) {
     if (friend_layout_counter < friendCount) {
         home_friends_box_row->remove(*friend_layout[friend_layout_counter]);
         friend_layout_name[friend_layout_counter]->set_label(name);
@@ -35,7 +35,7 @@ void Home::circulate_friend(std::string name, int user_id) {
     }
 }
 
-void Home::circulate_message(std::string name, std::string message, std::string color) {
+void HomeWindow::circulate_message(std::string name, std::string message, std::string color) {
     if (message_layout_counter < messageCount) {
         home_message_box_row->remove(*message_layout[message_layout_counter]);
         message_layout[message_layout_counter]->set_label(name + ": " + message);
@@ -48,7 +48,7 @@ void Home::circulate_message(std::string name, std::string message, std::string 
     }
 }
 
-void Home::on_logout_button_clicked() {
+void HomeWindow::on_logout_button_clicked() {
     Config config;
     std::ofstream authFile;
     authFile.open(config.auth_file);
@@ -58,17 +58,18 @@ void Home::on_logout_button_clicked() {
     system("./Chat &");
 }
 
-void Home::on_about_button_clicked() {
+void HomeWindow::on_about_button_clicked() {
     aboutRef.init(appRef, builderRef);
     aboutRef.show_window();
 }
 
-void Home::on_home_add_friend_clicked() {
+void HomeWindow::on_home_add_friend_clicked() {
     addFriendRef.init(appRef, builderRef);
+    addFriendRef.set_values(token);
     addFriendRef.show_window();
 }
 
-void Home::sync_friend_list() {
+void HomeWindow::sync_friend_list() {
     Config config;
     auto response = cpr::Get(
             cpr::Url{config.api_url + "chats"},
@@ -88,7 +89,7 @@ void Home::sync_friend_list() {
     }
 }
 
-void Home::on_send_button_clicked() {
+void HomeWindow::on_send_button_clicked() {
     if (current_chat_user_id == 0) {
         return;
     }
@@ -111,11 +112,11 @@ void Home::on_send_button_clicked() {
     }
 }
 
-void Home::on_message_change() {
+void HomeWindow::on_message_change() {
     message = home_message_input->get_text();
 }
 
-void Home::on_friend_message_clicked(int position) {
+void HomeWindow::on_friend_message_clicked(int position) {
     current_chat_user_id = friend_layout_id[position];
     current_chat_user_name = friend_layout_name[position]->get_text();
     home_friend_name->set_text(current_chat_user_name);
@@ -125,13 +126,16 @@ void Home::on_friend_message_clicked(int position) {
     }
 }
 
-void Home::sync_message() {
+void HomeWindow::sync_message() {
     Config config;
     auto response = cpr::Get(
             cpr::Url{config.api_url + "chats/messages/" + std::to_string(current_chat_user_id) + "/" +
                      std::to_string(last_message_id)},
             cpr::Header{{"Authorization", "Bearer " + token}}
     );
+
+//    std::cout << response.text << std::endl;
+
     auto json = nlohmann::json::parse(response.text);
 
     last_message_id = json["last_id"];
@@ -149,15 +153,15 @@ void Home::sync_message() {
 
 }
 
-void Home::sync_worker_thread() {
+void HomeWindow::sync_worker_thread() {
     while(true) {
         sleep(1);
         dispatcher.emit();
     }
 }
 
-void Home::on_notification_from_worker_thread() {
-    if (friend_sync_timer == 20) {
+void HomeWindow::on_notification_from_worker_thread() {
+    if (friend_sync_timer >= 20) {
         for (int i = 1; i <= friendCount; i++) {
             home_friends_box_row->remove(*friend_layout[i - 1]);
         }
@@ -173,7 +177,18 @@ void Home::on_notification_from_worker_thread() {
     friend_sync_timer++;
 }
 
-void Home::show_window() {
+void HomeWindow::sayHi(std::string name, int id) {
+    current_chat_user_id = id;
+    current_chat_user_name = name;
+    home_friend_name->set_text(name);
+    last_message_id = 0;
+    for (int i = 1; i <= messageCount; i++) {
+        home_message_box_row->remove(*message_layout[i - 1]);
+    }
+    friend_sync_timer = 20;
+}
+
+void HomeWindow::show_window() {
     builderRef->get_widget("home_window", window);
 
     if (window) {
@@ -182,7 +197,7 @@ void Home::show_window() {
             home_user_name->set_text(current_user_name);
         }
 
-        dispatcher.connect(sigc::mem_fun(*this, &Home::on_notification_from_worker_thread));
+        dispatcher.connect(sigc::mem_fun(*this, &HomeWindow::on_notification_from_worker_thread));
 
         builderRef->get_widget("home_message_box", home_message_box);
 
@@ -203,7 +218,7 @@ void Home::show_window() {
         for (int i = 1; i <= friendCount; i++) {
             builderRef->get_widget("friend_layout_button_" + std::to_string(i), friend_layout_button[i - 1]);
             friend_layout_button[i - 1]->signal_clicked().connect(sigc::bind<-1, int>(
-                    sigc::mem_fun(*this, &Home::on_friend_message_clicked), i-1));
+                    sigc::mem_fun(*this, &HomeWindow::on_friend_message_clicked), i-1));
         }
 
         for (int i = 1; i <= messageCount; i++) {
@@ -215,27 +230,27 @@ void Home::show_window() {
 
         builderRef->get_widget("home_about_button", aboutButton);
         if (aboutButton) {
-            aboutButton->signal_clicked().connect(sigc::mem_fun(*this, &Home::on_about_button_clicked));
+            aboutButton->signal_clicked().connect(sigc::mem_fun(*this, &HomeWindow::on_about_button_clicked));
         }
 
         builderRef->get_widget("home_logout_button", logoutButton);
         if (logoutButton) {
-            logoutButton->signal_clicked().connect(sigc::mem_fun(*this, &Home::on_logout_button_clicked));
+            logoutButton->signal_clicked().connect(sigc::mem_fun(*this, &HomeWindow::on_logout_button_clicked));
         }
 
         builderRef->get_widget("home_add_friend", home_add_friend);
         if (home_add_friend) {
-            home_add_friend->signal_clicked().connect(sigc::mem_fun(*this, &Home::on_home_add_friend_clicked));
+            home_add_friend->signal_clicked().connect(sigc::mem_fun(*this, &HomeWindow::on_home_add_friend_clicked));
         }
 
         builderRef->get_widget("home_message_input", home_message_input);
         if (home_message_input) {
-            home_message_input->signal_changed().connect(sigc::mem_fun(*this, &Home::on_message_change));
+            home_message_input->signal_changed().connect(sigc::mem_fun(*this, &HomeWindow::on_message_change));
         }
 
         builderRef->get_widget("home_message_send_button", home_message_send_button);
         if (home_message_send_button) {
-            home_message_send_button->signal_clicked().connect(sigc::mem_fun(*this, &Home::on_send_button_clicked));
+            home_message_send_button->signal_clicked().connect(sigc::mem_fun(*this, &HomeWindow::on_send_button_clicked));
         }
 
         this->sync_friend_list();
@@ -243,7 +258,7 @@ void Home::show_window() {
         Glib::RefPtr<Gtk::Adjustment> home_message_box_adj = home_message_box->get_vadjustment();
         home_message_box_adj->set_value(home_message_box_adj->get_upper());
 
-        Glib::Thread::create(sigc::mem_fun(*this, &Home::sync_worker_thread), true);
+        Glib::Thread::create(sigc::mem_fun(*this, &HomeWindow::sync_worker_thread), true);
 
         window->show_all_children();
         appRef->run(*window);

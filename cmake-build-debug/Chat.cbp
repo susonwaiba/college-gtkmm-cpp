@@ -312,40 +312,40 @@
 		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/opt/cpr/include/cpr/util.h">
 			<Option target="cpr"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/About.cpp">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/AboutWindow.cpp">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/About.h">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/AboutWindow.h">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/AddFriend.cpp">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/AddFriendWindow.cpp">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/AddFriend.h">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/AddFriendWindow.h">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Home.cpp">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/HomeWindow.cpp">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Home.h">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/HomeWindow.h">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Login.cpp">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/LoginWindow.cpp">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Login.h">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/LoginWindow.h">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Main.cpp">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/MainWindow.cpp">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Main.h">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/MainWindow.h">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Register.cpp">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/RegisterWindow.cpp">
 			<Option target="Chat"/>
 		</Unit>
-		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/Register.h">
+		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/windows/RegisterWindow.h">
 			<Option target="Chat"/>
 		</Unit>
 		<Unit filename="/home/suson/Workspace/College/3rd-sem/chat/CMakeLists.txt">

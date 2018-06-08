@@ -4,8 +4,8 @@
 #include <json.hpp>
 #include <fstream>
 #include "include/Config.h"
-#include "windows/Login.h"
-#include "windows/Home.h"
+#include "windows/LoginWindow.h"
+#include "windows/HomeWindow.h"
 
 int main(int argc, char **argv) {
     Config config;
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     int fileLength = file.tellg();
 
     if (fileLength == 0) {
-        Login login;
+        LoginWindow login;
         login.init(appRef, builderRef);
         login.show_window();
     } else {
@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
             case 200: {
                 int current_user_id = json2["id"];
                 std::string current_user_name = json2["name"];
-                Home home(token, current_user_id, current_user_name);
+                HomeWindow home(token, current_user_id, current_user_name);
                 home.init(appRef, builderRef);
                 home.show_window();
                 break;

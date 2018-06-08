@@ -7,7 +7,7 @@
 
 #include <gtkmm.h>
 
-class Main {
+class MainWindow {
 protected:
     Glib::RefPtr<Gtk::Application> appRef;
     Glib::RefPtr<Gtk::Builder> builderRef;

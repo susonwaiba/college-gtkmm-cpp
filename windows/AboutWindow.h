@@ -6,9 +6,9 @@
 #define CHAT_ABOUT_H
 
 #include <gtkmm.h>
-#include "Main.h"
+#include "MainWindow.h"
 
-class About : public Main {
+class AboutWindow : public MainWindow {
 private:
     Gtk::Window *window = nullptr;
 public:

@@ -202,7 +202,7 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="add_friend_alert">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">10</property>
@@ -222,7 +222,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkEntry" id="add_friend_email">
                 <property name="width_request">260</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -236,7 +236,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="add_friend_say_hi">
                 <property name="label" translatable="yes">Say Hi</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

@@ -36,12 +36,12 @@ add_executable(Chat
 
         include/Config.cpp
 
-        windows/Main.cpp
-        windows/Login.cpp
-        windows/Register.cpp
-        windows/Home.cpp
-        windows/About.cpp
-        windows/AddFriend.cpp
+        windows/MainWindow.cpp
+        windows/LoginWindow.cpp
+        windows/RegisterWindow.cpp
+        windows/HomeWindow.cpp
+        windows/AboutWindow.cpp
+        windows/AddFriendWindow.cpp
 
 #        example/ScrollWindow.cpp
 

@@ -6,9 +6,9 @@
 #define CHAT_REGISTER_H
 
 #include <gtkmm.h>
-#include "Main.h"
+#include "MainWindow.h"
 
-class Register : public Main {
+class RegisterWindow : public MainWindow {
 private:
     Gtk::Window *window = nullptr;
     Gtk::Label *alertMessage = nullptr;
@@ -22,7 +22,7 @@ private:
     std::string password;
     std::string passwordConfirmation;
 public:
-    Register();
+    RegisterWindow();
 
     void on_name_change();
 

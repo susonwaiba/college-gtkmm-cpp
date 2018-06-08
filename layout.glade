@@ -202,7 +202,7 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="add_friend_alert">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">10</property>
@@ -222,7 +222,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkEntry" id="add_friend_email">
                 <property name="width_request">260</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -236,7 +236,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="add_friend_say_hi">
                 <property name="label" translatable="yes">Say Hi</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -415,22 +415,8 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkButton" id="home_profile_settings_button">
-            <property name="label" translatable="yes">Profile Settings</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">True</property>
-            <property name="relief">none</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="home_change_password_button">
-            <property name="label" translatable="yes">Change Password</property>
+          <object class="GtkButton" id="home_about_button">
+            <property name="label" translatable="yes">About</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">True</property>
@@ -465,20 +451,6 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="home_about_button">
-            <property name="label" translatable="yes">About </property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">True</property>
-            <property name="relief">none</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">4</property>
           </packing>
         </child>
       </object>
